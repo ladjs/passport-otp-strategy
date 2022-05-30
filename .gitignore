@@ -1,6 +1,14 @@
-# Mac OS X
 .DS_Store
-
-# Node.js
+*.log
+.idea
 node_modules
-npm-debug.log
+coverage
+.nyc_output
+locales/
+package-lock.json
+
+
+Thumbs.db
+tmp/
+temp/
+*.lcov

@@ -1,9 +1,23 @@
-# Passport-OTP
+# @ladjs/passport-otp-strategy
 
-[![npm](https://img.shields.io/npm/v/passport-otp-strategy.svg)](https://www.npmjs.com/package/passport-otp-strategy)
-[![Build Status](https://secure.travis-ci.org/ejhayes/passport-otp.png)](http://travis-ci.org/ejhayes/passport-otp)
+[![npm](https://img.shields.io/npm/v/@ladjs/passport-otp-strategy.svg)](https://www.npmjs.com/package/@ladjs/passport-otp-strategy)
+[![Build Status](https://secure.travis-ci.org/ladjs/passport-otp-strategy.png)](http://travis-ci.org/ladjs/passport-otp-strategy)
 
-This is a fork of the [Passport-TOTP](https://github.com/jaredhanson/passport-totp) library and uses `otplib` instead of `notp`.
+
+## Table of Contents
+
+* [Foreword](#foreword)
+* [Install](#install)
+* [Usage](#usage)
+* [Examples](#examples)
+* [Tests](#tests)
+* [Contributors](#contributors)
+* [License](#license)
+
+
+## Foreword
+
+This is a fork of [passport-otp](https://github.com/ejhayes/passport-otp), which is a fork itself of the [Passport-TOTP](https://github.com/jaredhanson/passport-totp) library and uses `otplib` instead of `notp`.
 
 [Passport](http://passportjs.org/) strategy for two-factor authentication using
 a [TOTP](http://tools.ietf.org/html/rfc6238) value.
@@ -21,9 +35,13 @@ that a user already be authenticated using an initial factor.  Requirements
 regarding when to require a second factor are a matter of application-level
 policy, and outside the scope of both Passport and this strategy.
 
+
 ## Install
 
-    $ npm install passport-otp-strategy
+```sh
+npm install @ladjs/passport-otp-strategy
+```
+
 
 ## Usage
 
@@ -37,18 +55,20 @@ The `setup` callback accepts a previously authenticated `user` and calls `done`
 providing a `key` used to verify the token value.  Authentication
 fails if the value is not verified.
 
-    passport.use(new OtpStrategy(
-      {
-        codeField: 'code',
-        authenticator: {}
-      }
-      function(user, done) {
-        TotpKey.findOne({ userId: user.id }, function (err, key) {
-          if (err) { return done(err); }
-          return done(null, key.key);
-        });
-      }
-    ));
+```js
+passport.use(new OtpStrategy(
+  {
+    codeField: 'code',
+    authenticator: {}
+  }
+  function(user, done) {
+    TotpKey.findOne({ userId: user.id }, function (err, key) {
+      if (err) { return done(err); }
+      return done(null, key.key);
+    });
+  }
+));
+```
 
 You can find a full listing of `authenticator` options [here](https://www.npmjs.com/package/otplib#available-options). Note that the `crypto` library will be used by default. If you want to change that, you can specify it in `authenticator.crypto` (more on that [here](https://www.npmjs.com/package/otplib#using-specific-otp-implementations)).
 
@@ -60,30 +80,39 @@ requests.
 For example, as route middleware in an [Express](http://expressjs.com/)
 application:
 
-    app.post('/verify-otp', 
-      passport.authenticate('otp', { failureRedirect: '/verify-otp' }),
-      function(req, res) {
-        req.session.authFactors = [ 'otp' ];
-        res.redirect('/');
-      });
+```js
+app.post(
+  '/verify-otp',
+  passport.authenticate('otp', { failureRedirect: '/verify-otp' }),
+  function(req, res) {
+    req.session.authFactors = [ 'otp' ];
+    res.redirect('/');
+  }
+);
+```
+
 
 ## Examples
 
-For a complete, working example, refer to the [two-factor example](https://github.com/ejhayes/passport-otp/tree/master/examples/two-factor). Please keep in mind that this example is not production ready as-is.
+For a complete, working example, refer [Lad](https://lad.js.org) source code.
+
 
 ## Tests
 
-    $ npm install
-    $ make test
+```sh
+npm install
+npm run test
+```
 
-## Credits
 
-  - [Jared Hanson](http://github.com/jaredhanson)
+## Contributors
+
+| Name             | Website                          |
+| ---------------- | -------------------------------- |
+| **Eric Hayes**   | <https://github.com/ejhayes>     |
+| **Jared Hanson** | <https://github.com/jaredhanson> |
+
 
 ## License
 
-[The MIT License](http://opensource.org/licenses/MIT)
-
-## Contributing
-
-PRs are welcome!
+[MIT](LICENSE) © [Eric Hayes](https://github.com/ejhayes)
