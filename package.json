@@ -1,7 +1,7 @@
 {
   "name": "@ladjs/passport-otp-strategy",
   "description": "TOTP authentication strategy for Passport.",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "author": "Eric Hayes <eric@deployfx.com> (https://github.com/ejhayes)",
   "bugs": {
     "url": "http://github.com/ladjs/passport-otp-strategy/issues"
